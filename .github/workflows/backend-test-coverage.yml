@@ -19,10 +19,12 @@ jobs:
           distribution: "adopt"
 
       - name: Build with Maven
-        run: mv back/ && mvn clean install
+        run: mvn clean install
+        working-directory: back
       
       - name: Run tests and generate Jacoco report
         run: mvn test jacoco:report
+        working-directory: back
       
       - name: Upload Jacoco report artifact
         uses: actions/upload-artifact@v3
