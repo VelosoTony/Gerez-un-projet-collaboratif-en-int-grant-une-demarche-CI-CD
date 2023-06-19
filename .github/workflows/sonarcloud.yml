@@ -6,8 +6,8 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  build:
-    name: Build and analyze
+  back:
+    name: Java build and analyze
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -39,3 +39,43 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=VelosoTony_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
         working-directory: back
+        
+  front:
+          name: Angular build and analyze
+          runs-on: ubuntu-latest
+          steps:
+            - uses: actions/checkout@v3
+              with:
+                fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v2
+              with:
+                node-version: "14"
+
+            - name: Cache SonarCloud packages
+              uses: actions/cache@v3
+              with:
+                path: ~/.sonar/cache
+                key: ${{ runner.os }}-sonar
+                restore-keys: ${{ runner.os }}-sonar
+
+            - name: Cache Angular packages
+              uses: actions/cache@v3
+              with:
+                path: ~/.npm
+                key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+                restore-keys: ${{ runner.os }}-npm
+
+            - name: Install dependencies
+              run: npm ci
+              working-directory: front
+
+            - name: Build and analyze
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+              run: |
+                npm run build --if-present
+                sonar-scanner -Dsonar.projectKey=VelosoTony_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
+              working-directory: front
