@@ -19,7 +19,7 @@ jobs:
       - name: Build and Push Docker Image of frontend
         uses: docker/build-push-action@v3
         with:
-          context: ./front
+          context: .
           file:  ./front/Dockerfile
           push: true
           tags: tecktv/bobapp-front:latest
@@ -30,7 +30,7 @@ jobs:
       - name: Build and Push Docker Image of backend
         uses: docker/build-push-action@v3
         with:
-          context: ./back
+          context: .
           file:  ./back/Dockerfile
           push: true
           tags: tecktv/bobapp-back:latest
