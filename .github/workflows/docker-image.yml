@@ -13,4 +13,5 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image back
-      run: docker build . --file back/Dockerfile --tag velosotony/bobapp-back:$(date +%s)
+      working-directory : back
+      run: docker build . --file Dockerfile --tag velosotony/bobapp-back:$(date +%s)
