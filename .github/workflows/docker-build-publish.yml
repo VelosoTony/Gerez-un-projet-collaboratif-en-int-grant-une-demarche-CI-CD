@@ -8,8 +8,8 @@ on:
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  DOCKER_FRONT_PATH: front
-  DOCKER_BACK_PATH: back
+  DOCKER_FRONT_PATH: ./front
+  DOCKER_BACK_PATH: ./back
   DOCKER_IMAGE_FRONT_NAME: bobapp-front
   DOCKER_IMAGE_BACK_NAME: bobapp-back
   
