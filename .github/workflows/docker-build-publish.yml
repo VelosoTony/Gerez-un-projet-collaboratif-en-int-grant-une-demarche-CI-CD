@@ -24,7 +24,7 @@ jobs:
           context: ./front
           file:  ./front/Dockerfile
           push: true
-          tags: ${{ env.DOCKERHUB_REPO }}/bobapp-front:${{ github.sha }}
+          tags: ${{ env.DOCKERHUB_REPO }}/bobapp-front:latest
         env:
           DOCKER_USERNAME: ${{ env.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ env.DOCKER_PASSWORD }}
@@ -35,7 +35,7 @@ jobs:
           context: ./back
           file:  ./back/Dockerfile
           push: true
-          tags: ${{ env.DOCKERHUB_REPO }}/bobapp-back:${{ github.sha }}
+          tags: ${{ env.DOCKERHUB_REPO }}/bobapp-back:latest
         env:
           DOCKER_USERNAME: ${{ env.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ env.DOCKER_PASSWORD }}
