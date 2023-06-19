@@ -8,11 +8,6 @@ on:
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  DOCKER_FRONT_PATH: ./front
-  DOCKER_BACK_PATH: ./back
-  DOCKER_IMAGE_FRONT_NAME: bobapp-front
-  DOCKER_IMAGE_BACK_NAME: bobapp-back
-  
   DOCKERHUB_REPO: tecktv/bobapp
 
 jobs:
@@ -26,10 +21,10 @@ jobs:
       - name: Build and Push Docker Image of frontend
         uses: docker/build-push-action@v3
         with:
-          context: ${{ env.DOCKER_FRONT_PATH }}
-          file:  Dockerfile
+          context: ./front
+          file:  ./front/Dockerfile
           push: true
-          tags: ${{ env.DOCKERHUB_REPO }}/${{ env.DOCKER_IMAGE_FRONT_NAME }}:${{ github.sha }}
+          tags: ${{ env.DOCKERHUB_REPO }}/bobapp-front:${{ github.sha }}
         env:
           DOCKER_USERNAME: ${{ env.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ env.DOCKER_PASSWORD }}
@@ -37,10 +32,10 @@ jobs:
       - name: Build and Push Docker Image of backend
         uses: docker/build-push-action@v3
         with:
-          context: ${{ env.DOCKER_BACK_PATH }}
-          file:  Dockerfile
+          context: ./back
+          file:  ./back/Dockerfile
           push: true
-          tags: ${{ env.DOCKERHUB_REPO }}/${{ env.DOCKER_IMAGE_BACK_NAME }}:${{ github.sha }}
+          tags: ${{ env.DOCKERHUB_REPO }}/bobapp-back:${{ github.sha }}
         env:
           DOCKER_USERNAME: ${{ env.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ env.DOCKER_PASSWORD }}
