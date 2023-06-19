@@ -19,7 +19,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          working-directory: front
+        with:
+          projectBaseDir: front
           
       - name: Set up Java
         uses: actions/setup-java@v3
