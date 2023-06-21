@@ -40,10 +40,20 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-          working-directory: back
-      - name: Build and analyze
+        
+   #   - name: Build and analyze
+   #     env:
+   #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+   #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+   #     run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=velosotony_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
+   #     working-directory: back
+
+      - name: Build with Maven
+        working-directory: ./back
+        run: mvn clean package
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=velosotony_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
-        working-directory: back
