@@ -7,7 +7,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  back:
+  Sonarcloud analyze:
     name: Java build and analyze
     runs-on: ubuntu-latest
     steps:
