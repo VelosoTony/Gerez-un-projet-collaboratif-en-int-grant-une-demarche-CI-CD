@@ -15,21 +15,21 @@ jobs:
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
 
-      # - name: Setup Node.js
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 14
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
 
-      # - name: Install dependencies
-      #   run: npm install
+      - name: Install dependencies
+        run: npm install
 
-      # - name: Install dependencies
-      #   working-directory: front
-      #   run: npm ci
+      - name: Install dependencies
+        working-directory: front
+        run: npm ci
 
-      # - name: Run tests and generate reports
-      #   run: npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
-      #   working-directory: front
+      - name: Run tests and generate reports
+        run: npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
+        working-directory: front
 
       - name: Set up Java
         uses: actions/setup-java@v3
