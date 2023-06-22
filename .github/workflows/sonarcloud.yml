@@ -21,13 +21,10 @@ jobs:
           node-version: 14
 
       - name: Install dependencies
-        run: npm install
-
-      - name: Install dependencies
         working-directory: front
         run: npm ci
 
-      - name: Run tests and generate reports
+      - name: Run frontend tests and generate coverage report
         run: npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
         working-directory: front
 
@@ -54,10 +51,6 @@ jobs:
       - name: Build with Maven
         working-directory: ./back
         run: mvn clean package
-
-      # - name: Run tests and generate Jacoco report
-      #   run: mvn test jacoco:report
-      #   working-directory: back
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
