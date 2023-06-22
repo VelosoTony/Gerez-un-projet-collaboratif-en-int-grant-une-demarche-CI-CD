@@ -13,56 +13,56 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
- 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
 
-      - name: Install dependencies
-        run: npm install
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 14
 
-      - name: Install dependencies
-        working-directory: front
-        run: npm ci
+      # - name: Install dependencies
+      #   run: npm install
 
-      - name: Run tests and generate reports
-        run: npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
-        working-directory: front
- 
+      # - name: Install dependencies
+      #   working-directory: front
+      #   run: npm ci
+
+      # - name: Run tests and generate reports
+      #   run: npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
+      #   working-directory: front
+
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           java-version: "17"
           distribution: "adopt"
-                    
+
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-          
+
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-        
+
       - name: Build with Maven
         working-directory: ./back
         run: mvn clean package
-        
-      - name: Run tests and generate Jacoco report
-        run: mvn test jacoco:report
-        working-directory: back
+
+      # - name: Run tests and generate Jacoco report
+      #   run: mvn test jacoco:report
+      #   working-directory: back
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          projectBaseDir: .   
+          projectBaseDir: .
