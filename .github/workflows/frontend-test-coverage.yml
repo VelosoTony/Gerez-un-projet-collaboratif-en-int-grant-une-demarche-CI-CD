@@ -1,6 +1,7 @@
 name: Frontend run tests & reports
 
 on:
+  workflow_dispatch: {}
   pull_request:
     branches:
       - main
