@@ -31,4 +31,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: jacoco-report
-          path: back/target/site/jacoco/index.html
+          path: back/target/site/jacoco
